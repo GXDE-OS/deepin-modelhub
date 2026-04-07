@@ -6,7 +6,10 @@ Build-Depends: debhelper (>= 9),
  pkg-config,
  cmake,
  git,
- uuid-dev
+ uuid-dev,
+ nvidia-cuda-dev, 
+ nvidia-cuda-toolkit,
+ libvulkan-dev
 Standards-Version: 3.9.8
 Homepage: http://www.deepin.org/
 
