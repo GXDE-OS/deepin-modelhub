@@ -1,0 +1,5 @@
+usr/bin/deepin-modelhub
+usr/lib/*/deepin-modelhub/backends/*.so
+usr/lib/*/deepin-modelhub/backends/*.json
+usr/lib/*/libdeepinmodelhub.so
+usr/lib/*/deepin-modelhub/backends/llama.cpp/*.so

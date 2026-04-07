@@ -1,0 +1,23 @@
+Source: deepin-modelhub
+Section: utils
+Priority: optional
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Build-Depends: debhelper (>= 9),
+ pkg-config,
+ cmake,
+ git,
+ uuid-dev
+Standards-Version: 3.9.8
+Homepage: http://www.deepin.org/
+
+Package: deepin-modelhub
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Model manager.
+ Deepin Modelhub is a model base that provides large model management and running large models locally.
+
+Package: deepin-modelhub-dev
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Model manager Devel library.
+  This package contains the header files deepin-modelhub.

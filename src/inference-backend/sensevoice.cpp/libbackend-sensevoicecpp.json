@@ -1,0 +1,11 @@
+{
+    "name" : "sensevoice.cpp",
+    "version" : "1.0.0",
+    "model": {
+        "architectures":["ASR"],
+        "formats":["gguf"]
+    },
+    "MetaData": {
+        "iid": "org.deepin.plugin.modelhub.inference-backend"
+    }
+}

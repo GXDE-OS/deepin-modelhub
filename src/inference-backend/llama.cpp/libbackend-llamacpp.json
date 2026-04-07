@@ -1,0 +1,11 @@
+{
+    "name" : "llama.cpp",
+    "version" : "1.0.0",
+    "model": {
+        "architectures":["LLM", "Embedding"],
+        "formats":["gguf"]
+    },
+    "MetaData": {
+        "iid": "org.deepin.plugin.modelhub.inference-backend"
+    }
+}

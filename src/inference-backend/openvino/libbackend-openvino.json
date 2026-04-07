@@ -1,0 +1,11 @@
+{
+    "name" : "openvino",
+    "version" : "1.0.0",
+    "model": {
+        "architectures":["LLM", "Embedding"],
+        "formats":["openvino"]
+    },
+    "MetaData": {
+        "iid": "org.deepin.plugin.modelhub.inference-backend"
+    }
+}

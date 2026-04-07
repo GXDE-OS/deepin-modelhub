@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -ex
+
+SOROUCE_DIR=$1
+OUTPUT_DIR=$2
+
+echo "Starting minimum generate script"
+CMAKE_DEFS="-DBUILD_SHARED_LIBS=ON -DGGML_NATIVE=OFF -DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_AVX512=OFF -DGGML_FMA=OFF -DGGML_F16C=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_TESTS=OFF"
+#CMAKE_DEFS="-DBUILD_SHARED_LIBS=ON -DGGML_NATIVE=ON -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Debug"
+mkdir -p build
+cd build
+cmake ${SOROUCE_DIR} ${CMAKE_DEFS}
+make -j16
+
+mv bin/libggml*.so ${OUTPUT_DIR}/
+mv bin/libllama.so ${OUTPUT_DIR}/
+mv common/libcommon.a ${OUTPUT_DIR}/
+echo "end minimum generate script"
