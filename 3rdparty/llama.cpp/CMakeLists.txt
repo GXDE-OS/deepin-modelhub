@@ -30,9 +30,8 @@ add_subdirectory(llama.cpp-min)
 
 if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
     add_subdirectory(llama.cpp-avx2)
-
-    find_package(CUDAToolkit)
-    if (CUDAToolkit_FOUND)
-        add_subdirectory(llama.cpp-cuda)
-    endif()
+endif()
+find_package(CUDAToolkit)
+if (CUDAToolkit_FOUND)
+    add_subdirectory(llama.cpp-cuda)
 endif()
