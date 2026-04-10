@@ -1,3 +1,9 @@
+deepin-modelhub (0.0.34gxde1) UNRELEASED; urgency=medium
+
+  * 新增 vulkan 支持
+
+ -- gfdgd_xi <3025613752@qq.com>  Fri, 10 Apr 2026 22:45:13 +0800
+
 deepin-modelhub (0.0.34) unstable; urgency=medium
 
   * update deepin modelhub baseline version to V0.0.15

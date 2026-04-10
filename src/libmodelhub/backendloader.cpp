@@ -52,6 +52,7 @@ void BackendLoaderPrivate::preload(std::shared_ptr<BackendMetaObject> mo) {
     // 处理llama.cpp后端的预加载
 
     bool isCuda = false;
+    bool isVulkan = false;
     if (mo->name() == kInferenceBackendLlamaCpp) {
         std::string so = llamacppBackend();
         std::string soPath;
@@ -72,7 +73,7 @@ void BackendLoaderPrivate::preload(std::shared_ptr<BackendMetaObject> mo) {
         // 如果没有用户配置或配置无效,尝试默认库
         if (so.empty()) {
             // 按优先级顺序定义默认库列表
-            static std::vector<std::string> defaultso = {"libllama-cuda.so", "libllama-avx2.so", "libllama.so"};
+            static std::vector<std::string> defaultso = {"libllama-cuda.so", "libllama-vulkan.so", "libllama-avx2.so", "libllama.so"};
             for (const auto& fso : defaultso) {
                 bool ok = std::get<bool>(mo->extra(fso, false));
                 if (ok) {
@@ -80,6 +81,10 @@ void BackendLoaderPrivate::preload(std::shared_ptr<BackendMetaObject> mo) {
                     if (fso == "libllama-cuda.so") {
                         isCuda = true;
                     }
+		    //如果匹配到vulkan库，则设置vulkan为true
+		    if (fso == "libllama-vulkan") {
+			isVulkan = true;
+		    }
                     soPath = std::string(PLUGIN_BACKEND_DIR) + "/llama.cpp/" + fso;
                     so = fso;
                     break;
@@ -97,7 +102,11 @@ void BackendLoaderPrivate::preload(std::shared_ptr<BackendMetaObject> mo) {
         static std::vector<std::string> ggmlSo;
         if (isCuda) {
             ggmlSo = {"libggml-base", "libggml-cpu", "libggml-cuda","libggml"};
-        } else {
+        }
+        else if (isVulkan) {
+            ggmlSo = {"libggml-base", "libggml-cpu", "libggml-vulkan","libggml"};
+        }
+        else {
             ggmlSo = {"libggml-base", "libggml-cpu", "libggml"};
         }
 
@@ -214,7 +223,19 @@ void BackendLoaderPrivate::checkRuntime(std::shared_ptr<BackendMetaObject> mo) {
                         score = 5;
                         mo->setExtra(kInferenceBackendScore, ValueType(score));
                     }
-                } 
+                }
+                // 检查VULKAN支持
+                else if (name == "libllama-vulkan.so") {
+                    bool ok = !(system("vulkaninfo") >> 8);
+                    if (!ok) {
+                        std::cerr << "no vulkan devices." << std::endl;
+                    }
+                    mo->setExtra(name, ValueType(ok));
+                    if (score < 4 && ok) {
+                        score = 4;
+                        mo->setExtra(kInferenceBackendScore, ValueType(score));
+                    }
+                }
                 // 基础库总是可用
                 else {
                     mo->setExtra(name, ValueType(true));
