@@ -1,8 +1,9 @@
-deepin-modelhub (0.0.34gxde1) UNRELEASED; urgency=medium
+deepin-modelhub (0.0.34gxde2) UNRELEASED; urgency=medium
 
   * 新增 vulkan 支持
+  * 优化后端选择机制
 
- -- gfdgd_xi <3025613752@qq.com>  Fri, 10 Apr 2026 22:45:13 +0800
+ -- gfdgd_xi <3025613752@qq.com>  Sat, 11 Apr 2026 20:33:22 +0800
 
 deepin-modelhub (0.0.34) unstable; urgency=medium
 

@@ -100,11 +100,14 @@ void BackendLoaderPrivate::preload(std::shared_ptr<BackendMetaObject> mo) {
 
         std::string llamaPath = std::string(PLUGIN_BACKEND_DIR) + "/llama.cpp/";
         static std::vector<std::string> ggmlSo;
-        if (isCuda) {
-            ggmlSo = {"libggml-base", "libggml-cpu", "libggml-cuda","libggml"};
+        if (isCuda && isVulkan) {
+            ggmlSo = {"libggml-base", "libggml-cpu", "libggml-cuda", "libggml-vulkan", "libggml"};
         }
-        else if (isVulkan) {
+        else if (!isCuda && isVulkan) {
             ggmlSo = {"libggml-base", "libggml-cpu", "libggml-vulkan","libggml"};
+	}
+	else if (isCuda && !isVulkan) {
+            ggmlSo = {"libggml-base", "libggml-cpu", "libggml-cuda","libggml"};
         }
         else {
             ggmlSo = {"libggml-base", "libggml-cpu", "libggml"};
